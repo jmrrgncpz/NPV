@@ -11,7 +11,15 @@ namespace NPV.Services
     {
         public NPVCalculationsVM Calculate(ParametersVM parameters)
         {
-            throw new NotImplementedException();
+            List<NPVCalculation> npvCalculations = new List<NPVCalculation>();
+            for(
+                decimal discountRate = parameters.LowerBoundDiscountRate;
+                discountRate <= parameters.UpperBoundDiscountRate; 
+                discountRate += parameters.DiscountRateIncrement
+                )
+            {
+
+            }
         }
 
         public IEnumerable<NPVCalculationsVM> GetHistory()
@@ -30,9 +38,11 @@ namespace NPV.Services
             }
         }
 
-        private NPVCalculation CalculateNPV(decimal InitialValue, decimal DiscountRate, decimal[] Cashflows)
+        private decimal CalculateNPV(decimal InitialValue, decimal DiscountRate, decimal[] Cashflows)
         {
             IEnumerable<decimal> PVs = CalculatePVs(Cashflows, DiscountRate);
+            decimal SumOfPVs = PVs.Sum();
+            return -(InitialValue) + SumOfPVs;
         }
     }
 }
