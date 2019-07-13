@@ -7,6 +7,8 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NPV.Vue", "npv-vue\NPV.Vue.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPV", "NPV\NPV.csproj", "{68633794-ADF0-4C9F-A605-98975EE9C276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPV.Test", "NPV.Test\NPV.Test.csproj", "{F57C495E-5F62-496C-BF30-AE3547A8C95A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{68633794-ADF0-4C9F-A605-98975EE9C276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68633794-ADF0-4C9F-A605-98975EE9C276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68633794-ADF0-4C9F-A605-98975EE9C276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F57C495E-5F62-496C-BF30-AE3547A8C95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F57C495E-5F62-496C-BF30-AE3547A8C95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F57C495E-5F62-496C-BF30-AE3547A8C95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F57C495E-5F62-496C-BF30-AE3547A8C95A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
