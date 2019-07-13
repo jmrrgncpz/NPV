@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NPV.Models.Domain;
+﻿using NPV.Models.Domain;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,12 +9,7 @@ namespace NPV.DAL
 {
     public class NPVContext : DbContext
     {
-        public NPVContext() : base(GetOptions(Constants.DBContextName)) { }
-
-        private static DbContextOptions GetOptions(string connString)
-        {
-            return SqlServerDbContextOptionsExtensions.UseSqlServer(new DbContextOptionsBuilder(), connString).Options;
-        }
+        public NPVContext() : base(Constants.DBContextName) { }
 
         public DbSet<NPVCalculations> NPVCalculations { get; set; }
         public DbSet<NPVCalculation> NPVCalculation { get; set; }
