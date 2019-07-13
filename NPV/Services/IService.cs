@@ -12,6 +12,6 @@ namespace NPV.Services
     {
         IEnumerable<NPVCalculationsVM> GetHistory();
         IEnumerable<BaseNPVCalculation> ProcessCalculation(ParametersVM parameters);
-        NPVCalculationsVM SaveCalculation(ParametersVM parameters, IEnumerable<BaseNPVCalculation> NPVs);
+        void SaveCalculation(ParametersVM parameters, IEnumerable<BaseNPVCalculation> NPVs);
     }
 }
