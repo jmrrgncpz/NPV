@@ -7,6 +7,6 @@ namespace NPV
 {
     public class Constants
     {
-        public const string DBContextName = "name= PNVContext";
+        public const string DBContextName = "name= NPVContext";
     }
 }

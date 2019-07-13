@@ -8,5 +8,6 @@ namespace NPV.Models.View
 {
     public class ParametersVM : BaseParameters
     {
+        public decimal[] Cashflows { get; set; }
     }
 }

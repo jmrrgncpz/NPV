@@ -11,6 +11,5 @@ namespace NPV.Models.Abstract
         public decimal LowerBoundDiscountRate { get; set; }
         public decimal UpperBoundDiscountRate { get; set; }
         public decimal DiscountRateIncrement { get; set; }
-        public decimal[] Cashflows { get; set; }
     }
 }

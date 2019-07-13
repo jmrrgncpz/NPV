@@ -13,7 +13,6 @@ namespace NPV.Models.Domain
         public decimal NPV { get; set; }
         public decimal DiscountRate { get; set; }
 
-        [ForeignKey("NPVCalculationsID")]
         public virtual NPVCalculations NPVCalculations { get; set; }
     }
 }

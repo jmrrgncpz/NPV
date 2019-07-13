@@ -9,10 +9,9 @@ namespace NPV.Models.Domain
     public class Cashflow
     {
         public int ID { get; set; }
-        public int ParametersID { get; set; }
+        public int NPVCalculationsID { get; set; }
         public decimal Value { get; set; }
 
-        [ForeignKey("ParametersID")]
-        public virtual Parameters Parameters { get; set; }
+        public virtual NPVCalculations NPVCalculations { get; set; }
     }
 }

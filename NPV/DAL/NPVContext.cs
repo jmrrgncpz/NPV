@@ -9,12 +9,33 @@ namespace NPV.DAL
 {
     public class NPVContext : DbContext
     {
-        public NPVContext() : base(Constants.DBContextName) { }
+        public NPVContext() : base(Constants.DBContextName)
+        {
+            Database
+                .SetInitializer
+                (
+                    new MigrateDatabaseToLatestVersion<NPVContext, NPV.Migrations.Configuration>(Constants.DBContextName)
+                );
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.HasDefaultSchema("dbo");
+
+            modelBuilder.Entity<NPVCalculation>()
+                .HasRequired<NPVCalculations>(s => s.NPVCalculations)
+                .WithMany(t => t.ResultSet)
+                .HasForeignKey(t => t.NPVCalculationsID);
+
+            modelBuilder.Entity<Cashflow>()
+                .HasRequired<NPVCalculations>(r => r.NPVCalculations)
+                .WithMany(npvc => npvc.Cashflows)
+                .HasForeignKey(c => c.NPVCalculationsID);
+        }
 
         public DbSet<NPVCalculations> NPVCalculations { get; set; }
         public DbSet<NPVCalculation> NPVCalculation { get; set; }
         public DbSet<Cashflow> Cashflow { get; set; }
-        public DbSet<Parameters> Parameters { get; set; }
     }
 
 }

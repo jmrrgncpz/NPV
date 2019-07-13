@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NPV.Web</RootNamespace>
-    <AssemblyName>NPV.Web</AssemblyName>
+    <RootNamespace>NPV</RootNamespace>
+    <AssemblyName>NPV</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -78,11 +78,11 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="DAL\NPVContext.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\BaseParameters.cs" />
     <Compile Include="Models\Domain\Cashflow.cs" />
     <Compile Include="Models\Domain\NPVCalculation.cs" />
     <Compile Include="Models\Domain\NPVCalculations.cs" />
-    <Compile Include="Models\Domain\Parameters.cs" />
     <Compile Include="Models\View\NPVCalculationsVM.cs" />
     <Compile Include="Models\View\ParametersVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
