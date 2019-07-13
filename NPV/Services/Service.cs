@@ -19,15 +19,20 @@ namespace NPV.Services
             throw new NotImplementedException();
         }
 
-        private decimal CalculatePV(decimal Cashflow, decimal DiscountRate, int Year)
+        private IEnumerable<decimal> CalculatePVs(decimal[] Cashflows, decimal DiscountRate)
         {
-            decimal denominator = (decimal)Math.Pow((double)(1 + (DiscountRate * 0.01m)), Year);
-            return Cashflow / denominator;
+            int Year = 1;
+            foreach(decimal cashflow in Cashflows)
+            {
+                decimal denominator = (decimal)Math.Pow((double)(1 + (DiscountRate * 0.01m)), Year);
+                yield return cashflow / denominator;
+                Year++;
+            }
         }
 
-        private NPVCalculation CalculateNPV()
+        private NPVCalculation CalculateNPV(decimal InitialValue, decimal DiscountRate, decimal[] Cashflows)
         {
-
+            IEnumerable<decimal> PVs = CalculatePVs(Cashflows, DiscountRate);
         }
     }
 }
