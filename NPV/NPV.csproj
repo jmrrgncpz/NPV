@@ -8,7 +8,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="BLL\" />
     <Folder Include="Models\Business\" />
-    <Folder Include="Models\View\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
