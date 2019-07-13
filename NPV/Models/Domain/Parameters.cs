@@ -10,5 +10,7 @@ namespace NPV.Models.Domain
     {
         public int ID { get; set; }
         public int NPVCalculationsID { get; set; }
+
+        public virtual NPVCalculations NPVCalculations { get; set; }
     }
 }

@@ -9,5 +9,8 @@ namespace NPV.Models.Domain
     {
         public int ID { get; set; }
         public DateTime CalculationDate { get; set; }
+
+        public virtual Parameters Parameters { get; set; }
+        public virtual ICollection<NPVCalculation> ResultSet { get; set; }
     }
 }
