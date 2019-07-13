@@ -43,15 +43,10 @@ namespace NPV.Services
             int Year = 1;
             foreach (decimal cashflow in Cashflows)
             {
-                yield return CalculatePV(cashflow, DiscountRate, Year);
+                decimal denominator = (decimal)Math.Pow((double)(1 + (DiscountRate * 0.01m)), Year);
+                yield return cashflow / denominator;
                 Year++;
             }
-        }
-
-        private decimal CalculatePV(decimal Cashflow, decimal DiscountRate, int Year)
-        {
-            decimal denominator = (decimal)Math.Pow((double)(1 + (DiscountRate * 0.01m)), Year);
-            return Cashflow / denominator;
         }
 
         private decimal CalculateNPV(decimal InitialValue, decimal DiscountRate, decimal[] Cashflows)
