@@ -59,6 +59,7 @@ namespace NPV.Services
         public NPVCalculationsVM SaveCalculation(ParametersVM parameters, IEnumerable<BaseNPVCalculation> NPVs)
         {
             NPVCalculations savedNPVC = SaveNPVCalculations(parameters);
+            SaveCashflows(parameters.Cashflows, savedNPVC.ID);
 
         }
 
@@ -76,6 +77,16 @@ namespace NPV.Services
             dbContext.SaveChanges();
 
             return npvc;
+        }
+
+        private void SaveCashflows(decimal[] Cashflows, int NPVCalculationsID)
+        {
+            foreach (decimal cashflow in Cashflows)
+            {
+                dbContext.Cashflow.Add(new Cashflow { Value = cashflow, NPVCalculationsID = NPVCalculationsID });
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }
