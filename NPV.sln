@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPV", "NPV\NPV.csproj", "{6C6AB9D5-F780-4641-9179-CE441A6D2469}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "NPV.Vue", "npv-vue\NPV.Vue.njsproj", "{FE69FBDD-60E5-4489-89F5-B2446D985CC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C6AB9D5-F780-4641-9179-CE441A6D2469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C6AB9D5-F780-4641-9179-CE441A6D2469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C6AB9D5-F780-4641-9179-CE441A6D2469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C6AB9D5-F780-4641-9179-CE441A6D2469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE69FBDD-60E5-4489-89F5-B2446D985CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE69FBDD-60E5-4489-89F5-B2446D985CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE69FBDD-60E5-4489-89F5-B2446D985CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE69FBDD-60E5-4489-89F5-B2446D985CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0314B92-2F9B-41CE-9177-61301E6E342D}
+	EndGlobalSection
+EndGlobal
