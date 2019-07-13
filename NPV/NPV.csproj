@@ -106,7 +106,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\BaseParameters.cs" />
     <Compile Include="Models\Domain\Cashflow.cs" />
-    <Compile Include="Models\Domain\NPVCalculation.cs" />
+    <Compile Include="Models\Domain\SingleNPVCalculation.cs" />
     <Compile Include="Models\Domain\Calculation.cs" />
     <Compile Include="Models\View\CalculationVM.cs" />
     <Compile Include="Models\View\ParametersVM.cs" />
