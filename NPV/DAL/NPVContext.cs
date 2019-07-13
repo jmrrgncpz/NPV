@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace NPV.DAL
 {
@@ -11,11 +12,6 @@ namespace NPV.DAL
     {
         public NPVContext() : base(Constants.DBContextName)
         {
-            Database
-                .SetInitializer
-                (
-                    new MigrateDatabaseToLatestVersion<NPVContext, NPV.Migrations.Configuration>(Constants.DBContextName)
-                );
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
