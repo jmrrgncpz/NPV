@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using NPV.Models.Abstract;
 using NPV.Models.Domain;
 using NPV.Models.View;
 
@@ -9,9 +10,9 @@ namespace NPV.Services
 {
     public class Service : IService
     {
-        public IEnumerable<NPVCalculation> ProcessCalculation(ParametersVM parameters)
+        public IEnumerable<BaseNPVCalculation> ProcessCalculation(ParametersVM parameters)
         {
-            List<NPVCalculation> npvCalculations = new List<NPVCalculation>();
+            List<BaseNPVCalculation> npvCalculations = new List<BaseNPVCalculation>();
             for(
                 decimal discountRate = parameters.LowerBoundDiscountRate;
                 discountRate <= parameters.UpperBoundDiscountRate; 
@@ -19,7 +20,7 @@ namespace NPV.Services
                 )
             {
                 decimal NPV = CalculateNPV(parameters.InitialValue, discountRate, parameters.Cashflows);
-                npvCalculations.Add(new NPVCalculation { DiscountRate = discountRate, NPV = NPV });
+                npvCalculations.Add((BaseNPVCalculation)new NPVCalculation { DiscountRate = discountRate, NPV = NPV });
             }
 
             return npvCalculations;

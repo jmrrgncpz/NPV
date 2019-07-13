@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NPV.Models.Abstract
 {
-    public class BaseParameters
+    public abstract class BaseParameters
     {
         public decimal InitialValue { get; set; }
         public decimal LowerBoundDiscountRate { get; set; }
