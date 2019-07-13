@@ -77,10 +77,5 @@ namespace NPV.Services
 
             return npvc;
         }
-
-        private void SaveCashflows(decimal[] Cashflows, int NPVCalculationsID)
-        {
-            List<Cashflow> 
-        }
     }
 }
