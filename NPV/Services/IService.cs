@@ -1,4 +1,5 @@
-﻿using NPV.Models.View;
+﻿using NPV.Models.Domain;
+using NPV.Models.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace NPV.Services
     public interface IService
     {
         IEnumerable<NPVCalculationsVM> GetHistory();
-        NPVCalculationsVM Calculate(ParametersVM parameters);
+        IEnumerable<NPVCalculation> ProcessCalculation(ParametersVM parameters);
     }
 }

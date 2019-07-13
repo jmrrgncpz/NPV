@@ -9,7 +9,7 @@ namespace NPV.Services
 {
     public class Service : IService
     {
-        public NPVCalculationsVM Calculate(ParametersVM parameters)
+        public IEnumerable<NPVCalculation> ProcessCalculation(ParametersVM parameters)
         {
             List<NPVCalculation> npvCalculations = new List<NPVCalculation>();
             for(
@@ -18,8 +18,11 @@ namespace NPV.Services
                 discountRate += parameters.DiscountRateIncrement
                 )
             {
-
+                decimal NPV = CalculateNPV(parameters.InitialValue, discountRate, parameters.Cashflows);
+                npvCalculations.Add(new NPVCalculation { DiscountRate = discountRate, NPV = NPV });
             }
+
+            return npvCalculations;
         }
 
         public IEnumerable<NPVCalculationsVM> GetHistory()
