@@ -97,18 +97,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Abstract\BaseNPVCalculation.cs" />
-    <Compile Include="Services\IService.cs" />
-    <Compile Include="Migrations\201907131159206_InitialMigration.cs" />
-    <Compile Include="Migrations\201907131159206_InitialMigration.Designer.cs">
-      <DependentUpon>201907131159206_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201907131444468_InitialMigration.cs" />
+    <Compile Include="Migrations\201907131444468_InitialMigration.Designer.cs">
+      <DependentUpon>201907131444468_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Abstract\BaseSingleNPVCalculation.cs" />
+    <Compile Include="Services\IService.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\BaseParameters.cs" />
     <Compile Include="Models\Domain\Cashflow.cs" />
     <Compile Include="Models\Domain\NPVCalculation.cs" />
-    <Compile Include="Models\Domain\NPVCalculations.cs" />
-    <Compile Include="Models\View\NPVCalculationsVM.cs" />
+    <Compile Include="Models\Domain\Calculation.cs" />
+    <Compile Include="Models\View\CalculationVM.cs" />
     <Compile Include="Models\View\ParametersVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Service.cs" />
@@ -128,8 +128,8 @@
     <Folder Include="Models\Business\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201907131159206_InitialMigration.resx">
-      <DependentUpon>201907131159206_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201907131444468_InitialMigration.resx">
+      <DependentUpon>201907131444468_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

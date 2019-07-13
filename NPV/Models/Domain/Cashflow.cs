@@ -9,9 +9,9 @@ namespace NPV.Models.Domain
     public class Cashflow
     {
         public int ID { get; set; }
-        public int NPVCalculationsID { get; set; }
+        public int CalculationID { get; set; }
         public decimal Value { get; set; }
 
-        public virtual NPVCalculations NPVCalculations { get; set; }
+        public virtual Calculation Calculation { get; set; }
     }
 }

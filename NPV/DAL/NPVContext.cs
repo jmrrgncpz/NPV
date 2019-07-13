@@ -18,19 +18,19 @@ namespace NPV.DAL
         {
             modelBuilder.HasDefaultSchema("dbo");
 
-            modelBuilder.Entity<NPVCalculation>()
-                .HasRequired<NPVCalculations>(s => s.NPVCalculations)
+            modelBuilder.Entity<SingleNPVCalculation>()
+                .HasRequired<Calculation>(s => s.Calculation)
                 .WithMany(t => t.ResultSet)
-                .HasForeignKey(t => t.NPVCalculationsID);
+                .HasForeignKey(t => t.CalculationID);
 
             modelBuilder.Entity<Cashflow>()
-                .HasRequired<NPVCalculations>(r => r.NPVCalculations)
+                .HasRequired<Calculation>(r => r.Calculation)
                 .WithMany(npvc => npvc.Cashflows)
-                .HasForeignKey(c => c.NPVCalculationsID);
+                .HasForeignKey(c => c.CalculationID);
         }
 
-        public DbSet<NPVCalculations> NPVCalculations { get; set; }
-        public DbSet<NPVCalculation> NPVCalculation { get; set; }
+        public DbSet<Calculation> NPVCalculations { get; set; }
+        public DbSet<SingleNPVCalculation> NPVCalculation { get; set; }
         public DbSet<Cashflow> Cashflow { get; set; }
     }
 

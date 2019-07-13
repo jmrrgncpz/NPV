@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace NPV.Models.Domain
 {
-    public class NPVCalculations : BaseParameters
+    public class Calculation : BaseParameters
     {
         public int ID { get; set; }
         public DateTime CalculationDate { get; set; }
         
-        public virtual ICollection<NPVCalculation> ResultSet { get; set; }
+        public virtual ICollection<SingleNPVCalculation> ResultSet { get; set; }
         public virtual ICollection<Cashflow> Cashflows { get; set; }
     }
 }

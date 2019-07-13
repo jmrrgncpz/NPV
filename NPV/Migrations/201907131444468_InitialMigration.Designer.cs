@@ -13,7 +13,7 @@ namespace NPV.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201907131159206_InitialMigration"; }
+            get { return "201907131444468_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

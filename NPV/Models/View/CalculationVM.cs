@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace NPV.Models.View
 {
-    public class NPVCalculationsVM : NPVCalculations { }
+    public class CalculationVM : Calculation { }
 }

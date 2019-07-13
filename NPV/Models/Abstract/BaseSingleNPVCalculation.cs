@@ -5,7 +5,7 @@ using System.Web;
 
 namespace NPV.Models.Abstract
 {
-    public abstract class BaseNPVCalculation
+    public abstract class BaseSingleNPVCalculation
     {
         public decimal DiscountRate { get; set; }
         public decimal NPV { get; set; }

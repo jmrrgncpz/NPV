@@ -17,9 +17,9 @@ namespace NPV.Services
         {
 
         }
-        public IEnumerable<BaseNPVCalculation> ProcessCalculation(ParametersVM parameters)
+        public IEnumerable<BaseSingleNPVCalculation> ProcessCalculation(ParametersVM parameters)
         {
-            List<BaseNPVCalculation> npvCalculations = new List<BaseNPVCalculation>();
+            List<BaseSingleNPVCalculation> npvCalculations = new List<BaseSingleNPVCalculation>();
             for (
                 decimal discountRate = parameters.LowerBoundDiscountRate;
                 discountRate <= parameters.UpperBoundDiscountRate;
@@ -27,13 +27,13 @@ namespace NPV.Services
                 )
             {
                 decimal NPV = CalculateNPV(parameters.InitialValue, discountRate, parameters.Cashflows);
-                npvCalculations.Add((BaseNPVCalculation)new NPVCalculation { DiscountRate = discountRate, NPV = NPV });
+                npvCalculations.Add((BaseSingleNPVCalculation)new SingleNPVCalculation { DiscountRate = discountRate, NPV = NPV });
             }
 
             return npvCalculations;
         }
 
-        public IEnumerable<NPVCalculationsVM> GetHistory()
+        public IEnumerable<CalculationVM> GetHistory()
         {
             throw new NotImplementedException();
         }
@@ -56,16 +56,16 @@ namespace NPV.Services
             return -(InitialValue) + SumOfPVs;
         }
 
-        public void SaveCalculation(ParametersVM parameters, IEnumerable<BaseNPVCalculation> NPVs)
+        public void SaveCalculation(ParametersVM parameters, IEnumerable<BaseSingleNPVCalculation> NPVs)
         {
-            NPVCalculations savedNPVC = SaveNPVCalculations(parameters);
-            SaveCashflows(parameters.Cashflows, savedNPVC.ID);
-            SaveMultipleNPVCalculation(NPVs, savedNPVC.ID);
+            Calculation savedCalculation = SaveCalculation(parameters);
+            SaveCashflows(parameters.Cashflows, savedCalculation.ID);
+            SaveSingleNPVCalculations(NPVs, savedCalculation.ID);
         }
 
-        private NPVCalculations SaveNPVCalculations(ParametersVM parameters)
+        private Calculation SaveCalculation(ParametersVM parameters)
         {
-            NPVCalculations npvc = new NPVCalculations
+            Calculation npvc = new Calculation
             {
                 CalculationDate = DateTime.Now,
                 DiscountRateIncrement = parameters.DiscountRateIncrement,
@@ -79,25 +79,25 @@ namespace NPV.Services
             return npvc;
         }
 
-        private void SaveCashflows(decimal[] Cashflows, int NPVCalculationsID)
+        private void SaveCashflows(decimal[] Cashflows, int calculationId)
         {
             foreach (decimal cashflow in Cashflows)
             {
-                dbContext.Cashflow.Add(new Cashflow { Value = cashflow, NPVCalculationsID = NPVCalculationsID });
+                dbContext.Cashflow.Add(new Cashflow { Value = cashflow, CalculationID = calculationId });
             }
 
             dbContext.SaveChanges();
         }
 
-        private void SaveMultipleNPVCalculation(IEnumerable<BaseNPVCalculation> nPVCalculations, int NPVcalculationsID)
+        private void SaveSingleNPVCalculations(IEnumerable<BaseSingleNPVCalculation> nPVCalculations, int calculationId)
         {
-            foreach (BaseNPVCalculation baseNPVCalculation in nPVCalculations)
+            foreach (BaseSingleNPVCalculation baseNPVCalculation in nPVCalculations)
             {
-                dbContext.NPVCalculation.Add(new NPVCalculation
+                dbContext.NPVCalculation.Add(new SingleNPVCalculation
                 {
                     DiscountRate = baseNPVCalculation.DiscountRate,
                     NPV = baseNPVCalculation.NPV,
-                    NPVCalculationsID = NPVcalculationsID
+                    CalculationID = calculationId
                 });
             }
 

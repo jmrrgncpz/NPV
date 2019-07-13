@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace NPV.Models.Domain
 {
-    public class NPVCalculation : BaseNPVCalculation
+    public class SingleNPVCalculation : BaseSingleNPVCalculation
     {
         public int ID { get; set; }
-        public int NPVCalculationsID { get; set; }
+        public int CalculationID { get; set; }
 
-        public virtual NPVCalculations NPVCalculations { get; set; }
+        public virtual Calculation Calculation { get; set; }
     }
 }

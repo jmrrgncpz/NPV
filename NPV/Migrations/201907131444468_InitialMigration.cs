@@ -12,15 +12,15 @@ namespace NPV.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        NPVCalculationsID = c.Int(nullable: false),
+                        CalculationID = c.Int(nullable: false),
                         Value = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.NPVCalculations", t => t.NPVCalculationsID, cascadeDelete: true)
-                .Index(t => t.NPVCalculationsID);
+                .ForeignKey("dbo.Calculations", t => t.CalculationID, cascadeDelete: true)
+                .Index(t => t.CalculationID);
             
             CreateTable(
-                "dbo.NPVCalculations",
+                "dbo.Calculations",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
@@ -34,28 +34,28 @@ namespace NPV.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.NPVCalculations1",
+                "dbo.SingleNPVCalculations",
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        NPVCalculationsID = c.Int(nullable: false),
-                        NPV = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CalculationID = c.Int(nullable: false),
                         DiscountRate = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        NPV = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.NPVCalculations", t => t.NPVCalculationsID, cascadeDelete: true)
-                .Index(t => t.NPVCalculationsID);
+                .ForeignKey("dbo.Calculations", t => t.CalculationID, cascadeDelete: true)
+                .Index(t => t.CalculationID);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Cashflows", "NPVCalculationsID", "dbo.NPVCalculations");
-            DropForeignKey("dbo.NPVCalculations1", "NPVCalculationsID", "dbo.NPVCalculations");
-            DropIndex("dbo.NPVCalculations1", new[] { "NPVCalculationsID" });
-            DropIndex("dbo.Cashflows", new[] { "NPVCalculationsID" });
-            DropTable("dbo.NPVCalculations1");
-            DropTable("dbo.NPVCalculations");
+            DropForeignKey("dbo.Cashflows", "CalculationID", "dbo.Calculations");
+            DropForeignKey("dbo.SingleNPVCalculations", "CalculationID", "dbo.Calculations");
+            DropIndex("dbo.SingleNPVCalculations", new[] { "CalculationID" });
+            DropIndex("dbo.Cashflows", new[] { "CalculationID" });
+            DropTable("dbo.SingleNPVCalculations");
+            DropTable("dbo.Calculations");
             DropTable("dbo.Cashflows");
         }
     }

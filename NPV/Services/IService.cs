@@ -10,8 +10,8 @@ namespace NPV.Services
 {
     public interface IService
     {
-        IEnumerable<NPVCalculationsVM> GetHistory();
-        IEnumerable<BaseNPVCalculation> ProcessCalculation(ParametersVM parameters);
-        void SaveCalculation(ParametersVM parameters, IEnumerable<BaseNPVCalculation> NPVs);
+        IEnumerable<CalculationVM> GetHistory();
+        IEnumerable<BaseSingleNPVCalculation> ProcessCalculation(ParametersVM parameters);
+        void SaveCalculation(ParametersVM parameters, IEnumerable<BaseSingleNPVCalculation> NPVs);
     }
 }
