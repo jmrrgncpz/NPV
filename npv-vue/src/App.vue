@@ -89,7 +89,12 @@ export default {
     return {
       parameters: {
         initialValue: {
-          value : 0
+          value : 0,
+          validator : function(value){
+            if(value <= 0 || value > 10000000000) return { valid: false, message : "Valid values ranges from 1 to 10000000000"};
+
+            return true;
+          }
         },
         lowerBoundDiscountRate: {
           value : 0,
@@ -118,7 +123,14 @@ export default {
           }
         },
         cashflows: {
-          value : [{ value: 0 }]
+          value : [{ value: 0 }],
+          validator : function(value){
+            const flag = value.some(x => x.value < -10000000000 || x.value > 10000000000);
+
+            if(flag) return { valid : false, message : "Valid value ranges from -10000000000 to 10000000000"}
+
+            return { valid : true }
+          }
         }
       },
       output: null,
