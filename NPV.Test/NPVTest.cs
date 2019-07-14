@@ -10,38 +10,50 @@ namespace NPV.Test
     [TestClass]
     public class NPVTest
     {
+        ICalculationService calculationService = new CalculationService();
+        public NPVTest()
+        {
+
+        }
+
         [TestMethod]
-        [DataRow(10000, 0.25, 1, 1, new double[] { 1000, 1000, 1000, 1000})]
-        public void ProcessCalculation_SimpleValues_Calculate
+        [DataRow(10000, 1, new double[] { 1000, 1000, 1000, 1000})]
+        public void CalculateNPV_SimpleValues_Calculate
             (
                 double InitialValue,
-                double DiscountRateIncrement,
-                double LowerBoundDiscountRate,
-                double UpperBoundDiscountRate,
+                double DiscountRate,
                 double[] Cashflows
             )
         {
             //Arrange
-            decimal[] decimalCashflows = new decimal[Cashflows.Length];
-            for (int i = 0; i < Cashflows.Length; i++) decimalCashflows[i] = (decimal)Cashflows[i];
-            ParametersVM parameters = new ParametersVM
-            {
-                Cashflows = decimalCashflows,
-                DiscountRateIncrement = (decimal)DiscountRateIncrement,
-                InitialValue = (decimal)InitialValue,
-                LowerBoundDiscountRate = (decimal)LowerBoundDiscountRate,
-                UpperBoundDiscountRate = (decimal)UpperBoundDiscountRate
-            };
-
-
-            Service serviceInstance = new Service();
+            var x = new decimal[Cashflows.Length];
+            for (int i = 0; i < Cashflows.Length; i++) x[i] = (decimal)Cashflows[i];
 
             //Act
-            IEnumerable<BaseSingleNPVCalculation> result = serviceInstance.ProcessCalculation(parameters);
+            decimal NPV = calculationService.CalculateNPV(x, (decimal)DiscountRate, (decimal)InitialValue);
 
             //Assert
+            Assert.AreEqual<decimal>(-6098.03m, NPV);
+        }
 
-            Assert.IsTrue(true);
+        [TestMethod]
+        [DataRow(10000, 1, new double[] { 1000, -1000, 1000, 1000 })]
+        public void CalculateNPV_WithNegativeValues_Calculate
+            (
+                double InitialValue,
+                double DiscountRate,
+                double[] Cashflows
+            )
+        {
+            //Arrange
+            var x = new decimal[Cashflows.Length];
+            for (int i = 0; i < Cashflows.Length; i++) x[i] = (decimal)Cashflows[i];
+
+            //Act
+            decimal NPV = calculationService.CalculateNPV(x, (decimal)DiscountRate, (decimal)InitialValue);
+
+            //Assert
+            Assert.AreEqual<decimal>(-8058.63m, NPV);
         }
     }
 }

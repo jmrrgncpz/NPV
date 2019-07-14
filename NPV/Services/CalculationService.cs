@@ -18,7 +18,7 @@ namespace NPV.Services
         {
             IEnumerable<decimal> PVs = CalculatePVs(Cashflows, DiscountRate);
             decimal SumOfPVs = PVs.Sum();
-            return -(InitialValue) + SumOfPVs;
+            return Math.Round(-(InitialValue) + SumOfPVs, 2);
         }
 
         private IEnumerable<decimal> CalculatePVs(decimal[] Cashflows, decimal DiscountRate)
@@ -27,7 +27,7 @@ namespace NPV.Services
             foreach (decimal cashflow in Cashflows)
             {
                 decimal denominator = (decimal)Math.Pow((double)(1 + (DiscountRate * 0.01m)), Year);
-                yield return cashflow / denominator;
+                yield return Math.Round(cashflow / denominator, 2);
                 Year++;
             }
         }
