@@ -115,6 +115,8 @@
     <Compile Include="Models\View\ParametersVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GeneralPurpose\Service.cs" />
+    <Compile Include="Services\History\HistoryService.cs" />
+    <Compile Include="Services\History\IHistoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
