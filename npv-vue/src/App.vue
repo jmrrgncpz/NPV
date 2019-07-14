@@ -131,7 +131,7 @@ export default {
           value : 0,
           message : "",
           validator : function(context){
-            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
+            if(this.value <= 0 || this.value > 100) return { valid: false, message : "Valid values ranges from 0.01 to 100"};
 
             return { valid : true };
           }
