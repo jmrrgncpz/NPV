@@ -1,7 +1,46 @@
 <template>
   <div id="app">
     <main>
+      <section id="parameters-container">
+        <div id="singular-parameters-container">
+          <b-field label="Initial Value">
+            <b-input v-model="parameters.initialValue"></b-input>
+          </b-field>
+          <div class="discount-rate-range">
+            <b-field label="Lower Bound Discount Rate">
+              <b-input v-model="parameters.lowerBoundDiscountRate"></b-input>
+            </b-field>
+            <b-field label="Upper Bound Discount Rate">
+              <b-input v-model="parameters.upperBoundDiscountRate"></b-input>
+            </b-field>
+          </div>
+          <b-field label="Discount Rate Increment">
+            <b-input v-model="parameters.discountRateIncrement"></b-input>
+          </b-field>
+        </div>
+        <div id="cashflow-inputs-container">
+          <div class="wrapper">
+            <span class="title is-size-6">Cashflows</span>
+            <b-input v-for="cashflow in parameters.cashflows" type="number" placeholder="Cashflow" v-model="cashflow.value"></b-input>
+            <button class="button has-icons-left is-expanded btn-cashflow-add" v-on:click="addCashflowInput">
+              <b-icon pack="fas" icon="plus" size="is-small"></b-icon>
+              <span>Add Cashflow</span>
+            </button>
+          </div>
+        </div>
+        <div id="parameter-actions-container">
+          <b-button v-on:click="calculate">Calculate</b-button>
+          <b-button>Reset</b-button>
+        </div>
+      </section>
+
+      <section id="result-container">
+
+      </section>
       
+      <section id="history-container">
+        
+      </section>
     </main>
   </div>
 </template>
@@ -10,6 +49,22 @@
 
 export default {
   name: 'app',
+  data : () => {
+    return {
+      parameters : {
+        initialValue : 0,
+        lowerBoundDiscountRate : 0,
+        upperBoundDiscountRate : 0,
+        discountRateIncrement : 0,
+        cashflows : [{value : 0}]
+      }
+    }
+  },
+  methods : {
+    addCashflowInput: function(){
+      this.parameters.cashflows.push({value: 0});
+    }
+  },
   components: {
   }
 }
@@ -32,5 +87,43 @@ body,
 }
 
 #app{
+  padding: 1em;
+}
+
+#parameters-container{
+  display: flex;
+  position: relative;
+}
+
+#parameters-container > *:not(:last-child){
+  margin-right: 1em;
+}
+
+#singular-parameters-container{
+  width: 300px;
+}
+
+#parameter-actions-container{
+  margin-left: auto;
+}
+
+#cashflow-inputs-container{
+  position: relative;
+  width: 200px;
+}
+
+#cashflow-inputs-container .wrapper{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom:0;
+  left: 0;
+  overflow: auto;
+}
+
+#cashflow-inputs-container .wrapper > *:not(:last-child){
+  margin-bottom: .5em;
 }
 </style>
