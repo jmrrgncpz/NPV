@@ -104,7 +104,6 @@ export default {
           value : 0,
           message : "",
           validator : function(context){
-            debugger;
             const parsedValue = parseFloat(this.value);
 
             if(parsedValue >= parseFloat(context.parameters.upperBoundDiscountRate.value)) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
@@ -118,7 +117,6 @@ export default {
           value : 0,
           message : "",
           validator : function(context){
-            debugger;
             const parsedValue = parseFloat(this.value);
             if(parsedValue <= parseFloat(context.parameters.lowerBoundDiscountRate.value)) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
             if(parsedValue < 1 || parsedValue > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
