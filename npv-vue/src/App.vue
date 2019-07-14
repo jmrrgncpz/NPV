@@ -45,7 +45,7 @@
       </section>
 
       <section id="result-container">
-        <table class="table">
+        <table class="table is-striped">
           <thead>
             <tr>
               <th>Discount Rate</th>
@@ -253,7 +253,7 @@ main > * {
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 0 1 150px;
+  width:300px;
 }
 
 #history-container .wrapper {
