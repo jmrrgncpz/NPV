@@ -2,18 +2,16 @@
   <div id="app">
     <main>
       <section id="parameters-container">
-        <div id="singular-parameters-container">
+        <div id="singular-parameters-container" class="field">
           <b-field label="Initial Value">
             <b-input v-model="parameters.initialValue" type="number"></b-input>
           </b-field>
-          <div class="discount-rate-range">
-            <b-field label="Lower Bound Discount Rate">
-              <b-input v-model="parameters.lowerBoundDiscountRate" type="number"></b-input>
-            </b-field>
-            <b-field label="Upper Bound Discount Rate">
-              <b-input v-model="parameters.upperBoundDiscountRate" type="number"></b-input>
-            </b-field>
-          </div>
+          <b-field label="Lower Bound Discount Rate">
+            <b-input v-model="parameters.lowerBoundDiscountRate" type="number"></b-input>
+          </b-field>
+          <b-field label="Upper Bound Discount Rate">
+            <b-input v-model="parameters.upperBoundDiscountRate" type="number"></b-input>
+          </b-field>
           <b-field label="Discount Rate Increment">
             <b-input v-model="parameters.discountRateIncrement" type="number" step="0.01"></b-input>
           </b-field>
@@ -157,6 +155,7 @@ export default {
       el.classList.add('selected');
     },
     removeCashflowInput : function(index){
+      if(this.parameters.cashflows.length == 1) return;
       this.parameters.cashflows.splice(index, 1)
     }
   },
