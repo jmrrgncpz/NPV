@@ -103,9 +103,9 @@
       <DependentUpon>201907131444468_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\BaseSingleNPVCalculation.cs" />
-    <Compile Include="Services\CalculationService.cs" />
-    <Compile Include="Services\ICalculationService.cs" />
-    <Compile Include="Services\IService.cs" />
+    <Compile Include="Services\Calculation\CalculationService.cs" />
+    <Compile Include="Services\Calculation\ICalculationService.cs" />
+    <Compile Include="Services\GeneralPurpose\IService.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\BaseParameters.cs" />
     <Compile Include="Models\Domain\Cashflow.cs" />
@@ -114,7 +114,7 @@
     <Compile Include="Models\View\CalculationVM.cs" />
     <Compile Include="Models\View\ParametersVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\GeneralPurpose\Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
