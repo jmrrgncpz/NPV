@@ -40,7 +40,7 @@
         </div>
         <div id="parameter-actions-container">
           <b-button v-on:click="calculate">Calculate</b-button>
-          <b-button>Reset</b-button>
+          <b-button v-on:click="reset">Reset</b-button>
         </div>
       </section>
 
@@ -116,6 +116,13 @@ export default {
         that.output = res.data;
         that.historyItems.unshift(res.data);
       });
+    },
+    reset : function(){
+      this.parameters.initialValue = 0;
+      this.parameters.lowerBoundDiscountRate = 0;
+      this.parameters.upperBoundDiscountRate = 0;
+      this.parameters.discountRateIncrement = 0;
+      this.parameters.cashflows = [{ value:0 }];
     }
   },
   components: {
