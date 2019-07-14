@@ -15,6 +15,7 @@ namespace NPV.Controllers
     public class APIController : ApiController
     {
         IService service = new Service();
+        IHistoryService historyService = new HistoryService();
         public APIController()
         {
 
@@ -30,7 +31,8 @@ namespace NPV.Controllers
         [Route("history")]
         public IHttpActionResult GetHistory()
         {
-            return Ok();
+            var history = historyService.GetAll();
+            return Ok(history);
         }
     }
 }
