@@ -10,7 +10,7 @@
             v-bind:key="`input-${parameter.label}`"
             v-bind:message="parameter.message"
             v-bind:type="parameter.message != '' ? 'is-danger' : ''">
-            <b-input type="number" v-model="parameter.value"></b-input>
+            <b-input type="number" v-model="parameter.value" step="0.01"></b-input>
           </b-field>
         </div>
         <div id="cashflow-inputs-container" class="field">
@@ -104,8 +104,11 @@ export default {
           value : 0,
           message : "",
           validator : function(context){
-            if(this.value >= context.parameters.upperBoundDiscountRate.value) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
-            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
+            debugger;
+            const parsedValue = parseFloat(this.value);
+
+            if(parsedValue >= parseFloat(context.parameters.upperBoundDiscountRate.value)) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
+            if(parsedValue < 1 || parsedValue > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
 
             return { valid : true };
           }
@@ -115,8 +118,10 @@ export default {
           value : 0,
           message : "",
           validator : function(context){
-            if(this.value <= context.parameters.lowerBoundDiscountRate.value) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
-            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
+            debugger;
+            const parsedValue = parseFloat(this.value);
+            if(parsedValue <= parseFloat(context.parameters.lowerBoundDiscountRate.value)) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
+            if(parsedValue < 1 || parsedValue > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
 
             return { valid : true };
           }
