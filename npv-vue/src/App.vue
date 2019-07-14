@@ -63,6 +63,22 @@ export default {
   methods : {
     addCashflowInput: function(){
       this.parameters.cashflows.push({value: 0});
+    },
+    calculate : function(){
+      const that = this;
+      this.$axios({
+        url : "/api/calculate",
+        method : "POST",
+        data : {
+          InitialValue : that.initialValue,
+          LowerBoundDiscountRate : that.lowerBoundDiscountRate,
+          UpperBoundDiscountRate : that.upperBoundDiscountRate,
+          DiscountRateIncrement : that.discountRateIncrement,
+          Cashflows : that.cashflows.map(x => x.value)
+        },
+      }).then(res => {
+        debugger;
+      });
     }
   },
   components: {
