@@ -259,14 +259,11 @@ body,
   left: 0;
 }
 
-#app {
-  margin: 1em;
-}
-
 main {
   display: flex;
   height: 100%;
-  min-width: 800px;
+  width: 800px;
+  margin: 0 auto;
 }
 
 main > * {
