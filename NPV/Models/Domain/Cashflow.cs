@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace NPV.Models.Domain
         public int CalculationID { get; set; }
         public decimal Value { get; set; }
 
+        [JsonIgnore]
         public virtual Calculation Calculation { get; set; }
     }
 }

@@ -35,17 +35,36 @@
       </section>
 
       <section id="result-container">
-
+        <table>
+          <thead>
+            <tr>
+              <th>Discount Rate</th>
+              <th>NPV</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="result in output">
+              <th>{{ result.DiscountRate }}</th>
+              <th>{{ result.NPV }}</th>
+            </tr>
+          </tbody>
+        </table>
       </section>
       
       <section id="history-container">
-        
+        <span class="title is-size-6">History</span>
+        <div v-if="historyIsLoading">Fetching previously ran calculations...</div>
+        <div v-else id="history-items-container" class="content">
+          <history-item v-for="historyItem in historyItems" v-bind="historyItem">
+          </history-item>
+        </div>
       </section>
     </main>
   </div>
 </template>
 
 <script>
+import historyItem from "./components/HistoryItem";
 
 export default {
   name: 'app',
@@ -57,7 +76,10 @@ export default {
         upperBoundDiscountRate : 0,
         discountRateIncrement : 0,
         cashflows : [{value : 0}]
-      }
+      },
+      output : [],
+      historyItems : [],
+      historyIsLoading : true
     }
   },
   methods : {
@@ -78,11 +100,20 @@ export default {
         method : "POST",
         data : parameters,
       }).then(res => {
-        debugger;
+        that.output = res.data;
       });
     }
   },
-  components: {
+  components : {
+    historyItem
+  },
+  mounted : function(){
+    this.$axios({
+      url : "/api/history"
+    }).then(res => {
+       this.historyItems = res.data;
+       this.historyIsLoading = false;
+    });
   }
 }
 </script>
@@ -142,5 +173,14 @@ body,
 
 #cashflow-inputs-container .wrapper > *:not(:last-child){
   margin-bottom: .5em;
+}
+
+#history-items-container{
+  display: flex;
+}
+
+#history-items-container > *:not(:last-child){
+  margin-right: 1em;
+  margin-bottom: 0;
 }
 </style>
