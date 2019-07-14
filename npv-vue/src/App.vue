@@ -4,16 +4,16 @@
       <section id="parameters-container">
         <div id="singular-parameters-container" class="field">
           <b-field label="Initial Value">
-            <b-input v-model="parameters.initialValue" type="number"></b-input>
+            <b-input v-model="parameters.initialValue.value" type="number"></b-input>
           </b-field>
           <b-field label="Lower Bound Discount Rate">
-            <b-input v-model="parameters.lowerBoundDiscountRate" type="number"></b-input>
+            <b-input v-model="parameters.lowerBoundDiscountRate.value" type="number"></b-input>
           </b-field>
           <b-field label="Upper Bound Discount Rate">
-            <b-input v-model="parameters.upperBoundDiscountRate" type="number"></b-input>
+            <b-input v-model="parameters.upperBoundDiscountRate.value" type="number"></b-input>
           </b-field>
           <b-field label="Discount Rate Increment">
-            <b-input v-model="parameters.discountRateIncrement" type="number" step="0.01"></b-input>
+            <b-input v-model="parameters.discountRateIncrement.value" type="number" step="0.01"></b-input>
           </b-field>
         </div>
         <div id="cashflow-inputs-container" class="field">
@@ -21,7 +21,7 @@
           <div class="wrapper">
             <div class="_list">
               <cashflow-input
-                v-for="(cashflow, i ) in parameters.cashflows"
+                v-for="(cashflow, i ) in parameters.cashflows.value"
                 v-bind:key="`cashflow-input-${i + 1}`"
                 v-bind:number="i + 1"
                 v-bind:value.sync="cashflow.value"
@@ -88,11 +88,38 @@ export default {
   data: () => {
     return {
       parameters: {
-        initialValue: 0,
-        lowerBoundDiscountRate: 0,
-        upperBoundDiscountRate: 0,
-        discountRateIncrement: 0,
-        cashflows: [{ value: 0 }]
+        initialValue: {
+          value : 0
+        },
+        lowerBoundDiscountRate: {
+          value : 0,
+          validator : function(value){
+            if(value > this.upperBoundDiscountRate.value) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
+            if(value < 0 || value > 100) return { valid: false, message : "Valid values ranges from 0 to 100"};
+
+            return { valid : true };
+          }
+        },
+        upperBoundDiscountRate: {
+          value : 0,
+          validator : function(value){
+            if(value < this.lowerBoundDiscountRate.value) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
+            if(value < 0 || value > 100) return { valid: false, message : "Valid values ranges from 0 to 100"};
+
+            return { valid : true };
+          }
+        },
+        discountRateIncrement: {
+          value : 0,
+          validator : function(value){
+            if(value <= 0) return { valid : false, message : "Valid value should be greater than 0"}
+
+            return { valid : true };
+          }
+        },
+        cashflows: {
+          value : [{ value: 0 }]
+        }
       },
       output: null,
       historyItems: [],
@@ -101,16 +128,16 @@ export default {
   },
   methods: {
     addCashflowInput: function() {
-      this.parameters.cashflows.push({ value: 0 });
+      this.parameters.cashflows.value.push({ value: 0 });
     },
     calculate: function() {
       const that = this;
       const parameters = {
-        InitialValue: that.parameters.initialValue,
-        LowerBoundDiscountRate: that.parameters.lowerBoundDiscountRate,
-        UpperBoundDiscountRate: that.parameters.upperBoundDiscountRate,
-        DiscountRateIncrement: that.parameters.discountRateIncrement,
-        Cashflows: that.parameters.cashflows.map(x => x.value)
+        InitialValue: that.parameters.initialValue.value,
+        LowerBoundDiscountRate: that.parameters.lowerBoundDiscountRate.value,
+        UpperBoundDiscountRate: that.parameters.upperBoundDiscountRate.value,
+        DiscountRateIncrement: that.parameters.discountRateIncrement.value,
+        Cashflows: that.parameters.cashflows.value.map(x => x.value)
       };
       this.$axios({
         url: "/api/calculate",
@@ -122,19 +149,19 @@ export default {
       });
     },
     reset : function(){
-      this.parameters.initialValue = 0;
-      this.parameters.lowerBoundDiscountRate = 0;
-      this.parameters.upperBoundDiscountRate = 0;
-      this.parameters.discountRateIncrement = 0;
-      this.parameters.cashflows = [{ value:0 }];
+      this.parameters.initialValue.value = 0;
+      this.parameters.lowerBoundDiscountRate.value = 0;
+      this.parameters.upperBoundDiscountRate.value = 0;
+      this.parameters.discountRateIncrement.value = 0;
+      this.parameters.cashflows.value = [{ value:0 }];
     },
     viewHistoryItem : function(historyItem, e){
-      this.parameters.initialValue = historyItem.InitialValue;
-      this.parameters.discountRateIncrement = historyItem.DiscountRateIncrement;
-      this.parameters.lowerBoundDiscountRate = historyItem.LowerBoundDiscountRate;
-      this.parameters.upperBoundDiscountRate = historyItem.UpperBoundDiscountRate;
+      this.parameters.initialValue.value = historyItem.InitialValue;
+      this.parameters.discountRateIncrement.value = historyItem.DiscountRateIncrement;
+      this.parameters.lowerBoundDiscountRate.value = historyItem.LowerBoundDiscountRate;
+      this.parameters.upperBoundDiscountRate.value = historyItem.UpperBoundDiscountRate;
 
-      this.parameters.cashflows = historyItem.Cashflows.map(hi => {
+      this.parameters.cashflows.value = historyItem.Cashflows.map(hi => {
         return {
           value : hi.Value
         }
@@ -156,8 +183,12 @@ export default {
       el.classList.add('selected');
     },
     removeCashflowInput : function(index){
-      if(this.parameters.cashflows.length == 1) return;
-      this.parameters.cashflows.splice(index, 1)
+      if(this.parameters.cashflows.value.length == 1) return;
+      this.parameters.cashflows.value.splice(index, 1)
+    },
+    validateInputs : function(){
+      if(this.lowerBoundDiscountRate > this.upperBoundDiscountRate) return false;
+      if(this.discountRateIncrement <= 0) return false;
     }
   },
   components: {
