@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace NPV.Controllers
 {
-    [RoutePrefix("/api")]
+    [RoutePrefix("api")]
     public class APIController : ApiController
     {
         IService service = new Service();
