@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\APIController.cs" />
     <Compile Include="DAL\NPVContext.cs" />
     <Compile Include="DAL\NPVDatabaseInitializer.cs" />
     <Compile Include="Global.asax.cs">
@@ -102,6 +103,8 @@
       <DependentUpon>201907131444468_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract\BaseSingleNPVCalculation.cs" />
+    <Compile Include="Services\CalculationService.cs" />
+    <Compile Include="Services\ICalculationService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\BaseParameters.cs" />
@@ -124,7 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\Business\" />
   </ItemGroup>
   <ItemGroup>
