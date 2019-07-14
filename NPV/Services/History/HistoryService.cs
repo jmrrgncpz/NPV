@@ -16,6 +16,7 @@ namespace NPV.Services
             var calculations = GetAllCalculations();
 
             var y = from calculation in calculations
+                    orderby calculation.CalculationDate descending
                    select new CalculationVM
                    {
                        CalculationDate = calculation.CalculationDate,
