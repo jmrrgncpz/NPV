@@ -4,24 +4,24 @@
       <section id="parameters-container">
         <div id="singular-parameters-container">
           <b-field label="Initial Value">
-            <b-input v-model="parameters.initialValue"></b-input>
+            <b-input v-model="parameters.initialValue" type="number"></b-input>
           </b-field>
           <div class="discount-rate-range">
             <b-field label="Lower Bound Discount Rate">
-              <b-input v-model="parameters.lowerBoundDiscountRate"></b-input>
+              <b-input v-model="parameters.lowerBoundDiscountRate" type="number"></b-input>
             </b-field>
             <b-field label="Upper Bound Discount Rate">
-              <b-input v-model="parameters.upperBoundDiscountRate"></b-input>
+              <b-input v-model="parameters.upperBoundDiscountRate" type="number"></b-input>
             </b-field>
           </div>
           <b-field label="Discount Rate Increment">
-            <b-input v-model="parameters.discountRateIncrement"></b-input>
+            <b-input v-model="parameters.discountRateIncrement" type="number" step="0.01"></b-input>
           </b-field>
         </div>
         <div id="cashflow-inputs-container">
           <div class="wrapper">
             <span class="title is-size-6">Cashflows</span>
-            <b-input v-for="cashflow in parameters.cashflows" type="number" placeholder="Cashflow" v-model="cashflow.value"></b-input>
+            <b-input v-for="cashflow in parameters.cashflows" type="number"  placeholder="Cashflow" v-model="cashflow.value"></b-input>
             <button class="button has-icons-left is-expanded btn-cashflow-add" v-on:click="addCashflowInput">
               <b-icon pack="fas" icon="plus" size="is-small"></b-icon>
               <span>Add Cashflow</span>
@@ -66,16 +66,17 @@ export default {
     },
     calculate : function(){
       const that = this;
+      const parameters = {
+          InitialValue : that.parameters.initialValue,
+          LowerBoundDiscountRate : that.parameters.lowerBoundDiscountRate,
+          UpperBoundDiscountRate : that.parameters.upperBoundDiscountRate,
+          DiscountRateIncrement : that.parameters.discountRateIncrement,
+          Cashflows : that.parameters.cashflows.map(x => x.value)
+        };
       this.$axios({
         url : "/api/calculate",
         method : "POST",
-        data : {
-          InitialValue : that.initialValue,
-          LowerBoundDiscountRate : that.lowerBoundDiscountRate,
-          UpperBoundDiscountRate : that.upperBoundDiscountRate,
-          DiscountRateIncrement : that.discountRateIncrement,
-          Cashflows : that.cashflows.map(x => x.value)
-        },
+        data : parameters,
       }).then(res => {
         debugger;
       });
