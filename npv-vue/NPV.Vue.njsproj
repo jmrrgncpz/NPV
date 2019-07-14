@@ -27,7 +27,6 @@
     <Content Include="public\index.html" />
     <Content Include="public\favicon.ico" />
     <Content Include="src\App.vue" />
-    <Content Include="src\components\CashflowInput.vue" />
     <Content Include="src\components\HistoryItem.vue" />
     <Content Include="src\main.js" />
     <Content Include="tests\unit\.eslintrc.js" />
