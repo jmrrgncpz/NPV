@@ -55,6 +55,10 @@ export default {
     transition: background .2s ease;
 }
 
+.history-item.selected{
+    background: lightgray;
+}
+
 .history-item:hover{
     background:whitesmoke;
 }

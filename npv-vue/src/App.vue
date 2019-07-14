@@ -67,7 +67,11 @@
           <div class="_list">
             <div v-if="historyIsLoading">Fetching previously ran calculations...</div>
             <div v-else id="history-items-container" class="content">
-              <history-item v-for="historyItem in historyItems" v-bind="historyItem" v-on:click.native="viewHistoryItem(historyItem)"></history-item>
+              <history-item 
+                v-for="historyItem in historyItems"
+                v-bind="historyItem"
+                v-on:click.native="viewHistoryItem(historyItem, $event)">
+              </history-item>
             </div>
           </div>
         </div>
@@ -124,7 +128,7 @@ export default {
       this.parameters.discountRateIncrement = 0;
       this.parameters.cashflows = [{ value:0 }];
     },
-    viewHistoryItem : function(historyItem){
+    viewHistoryItem : function(historyItem, e){
       this.parameters.initialValue = historyItem.InitialValue;
       this.parameters.discountRateIncrement = historyItem.DiscountRateIncrement;
       this.parameters.lowerBoundDiscountRate = historyItem.LowerBoundDiscountRate;
@@ -137,6 +141,19 @@ export default {
       })
       
       this.output = historyItem;
+      this.selectHistoryItem(e);
+    },
+    selectHistoryItem : function(e){
+      let el = e.target;
+      if(!el.classList.contains('history-item')){
+        el = el.closest('.history-item');
+      }
+      const historyItems = document.querySelectorAll('.history-item');
+      historyItems.forEach(hi => {
+        hi.classList.remove('selected');
+      });
+
+      el.classList.add('selected');
     }
   },
   components: {
