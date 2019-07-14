@@ -21,6 +21,7 @@ namespace NPV.Controllers
 
         }
 
+        [HttpPost]
         [Route("calculate")]
         public IHttpActionResult Calculate(ParametersVM parameters)
         {
@@ -28,6 +29,7 @@ namespace NPV.Controllers
             return Ok(npvCalculations);
         }
 
+        [HttpGet]
         [Route("history")]
         public IHttpActionResult GetHistory()
         {
