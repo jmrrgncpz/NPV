@@ -22,12 +22,13 @@
           <p class="label is-size-6">Cashflows</p>
           <div class="wrapper">
             <div class="_list">
-              <b-input
-                v-for="cashflow in parameters.cashflows"
-                type="number"
-                placeholder="Cashflow"
-                v-model="cashflow.value"
-              ></b-input>
+              <cashflow-input
+                v-for="(cashflow, i ) in parameters.cashflows"
+                v-bind:key="`cashflow-input-${i + 1}`"
+                v-bind:number="i + 1"
+                v-bind:value.sync="cashflow.value"
+                v-on:cashflow-input-remove-btn-clicked="removeCashflowInput(i)"
+              ></cashflow-input>
               <button
                 class="button has-icons-left is-expanded btn-cashflow-add"
                 v-on:click="addCashflowInput"
@@ -82,8 +83,8 @@
 
 <script>
 import historyItem from "./components/HistoryItem";
-
-export default {
+import cashflowInput from "./components/CashflowInput";
+export default {  
   name: "app",
   data: () => {
     return {
@@ -154,10 +155,14 @@ export default {
       });
 
       el.classList.add('selected');
+    },
+    removeCashflowInput : function(index){
+      this.parameters.cashflows.splice(index, 1)
     }
   },
   components: {
-    historyItem
+    historyItem,
+    cashflowInput
   },
   mounted: function() {
     this.$axios({
@@ -243,6 +248,7 @@ main > * {
   bottom: 0;
   display: flex;
   flex-direction: column;
+  padding: 0.25em;
 }
 
 #cashflow-inputs-container ._list > *:not(:last-child) {
