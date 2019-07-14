@@ -18,14 +18,24 @@
             <b-input v-model="parameters.discountRateIncrement" type="number" step="0.01"></b-input>
           </b-field>
         </div>
-        <div id="cashflow-inputs-container">
+        <div id="cashflow-inputs-container" class="field">
+          <p class="label is-size-6">Cashflows</p>
           <div class="wrapper">
-            <span class="title is-size-6">Cashflows</span>
-            <b-input v-for="cashflow in parameters.cashflows" type="number"  placeholder="Cashflow" v-model="cashflow.value"></b-input>
-            <button class="button has-icons-left is-expanded btn-cashflow-add" v-on:click="addCashflowInput">
-              <b-icon pack="fas" icon="plus" size="is-small"></b-icon>
-              <span>Add Cashflow</span>
-            </button>
+            <div class="_list">
+              <b-input
+                v-for="cashflow in parameters.cashflows"
+                type="number"
+                placeholder="Cashflow"
+                v-model="cashflow.value"
+              ></b-input>
+              <button
+                class="button has-icons-left is-expanded btn-cashflow-add"
+                v-on:click="addCashflowInput"
+              >
+                <b-icon pack="fas" icon="plus" size="is-small"></b-icon>
+                <span>Add Cashflow</span>
+              </button>
+            </div>
           </div>
         </div>
         <div id="parameter-actions-container">
@@ -50,13 +60,16 @@
           </tbody>
         </table>
       </section>
-      
+
       <section id="history-container">
-        <span class="title is-size-6">History</span>
-        <div v-if="historyIsLoading">Fetching previously ran calculations...</div>
-        <div v-else id="history-items-container" class="content">
-          <history-item v-for="historyItem in historyItems" v-bind="historyItem">
-          </history-item>
+        <strong class="_title is-size-6">History</strong>
+        <div class="wrapper">
+          <div class="_list">
+            <div v-if="historyIsLoading">Fetching previously ran calculations...</div>
+            <div v-else id="history-items-container" class="content">
+              <history-item v-for="historyItem in historyItems" v-bind="historyItem"></history-item>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -67,67 +80,67 @@
 import historyItem from "./components/HistoryItem";
 
 export default {
-  name: 'app',
-  data : () => {
+  name: "app",
+  data: () => {
     return {
-      parameters : {
-        initialValue : 0,
-        lowerBoundDiscountRate : 0,
-        upperBoundDiscountRate : 0,
-        discountRateIncrement : 0,
-        cashflows : [{value : 0}]
+      parameters: {
+        initialValue: 0,
+        lowerBoundDiscountRate: 0,
+        upperBoundDiscountRate: 0,
+        discountRateIncrement: 0,
+        cashflows: [{ value: 0 }]
       },
-      output : null,
-      historyItems : [],
-      historyIsLoading : true
-    }
+      output: null,
+      historyItems: [],
+      historyIsLoading: true
+    };
   },
-  methods : {
-    addCashflowInput: function(){
-      this.parameters.cashflows.push({value: 0});
+  methods: {
+    addCashflowInput: function() {
+      this.parameters.cashflows.push({ value: 0 });
     },
-    calculate : function(){
+    calculate: function() {
       const that = this;
       const parameters = {
-          InitialValue : that.parameters.initialValue,
-          LowerBoundDiscountRate : that.parameters.lowerBoundDiscountRate,
-          UpperBoundDiscountRate : that.parameters.upperBoundDiscountRate,
-          DiscountRateIncrement : that.parameters.discountRateIncrement,
-          Cashflows : that.parameters.cashflows.map(x => x.value)
-        };
+        InitialValue: that.parameters.initialValue,
+        LowerBoundDiscountRate: that.parameters.lowerBoundDiscountRate,
+        UpperBoundDiscountRate: that.parameters.upperBoundDiscountRate,
+        DiscountRateIncrement: that.parameters.discountRateIncrement,
+        Cashflows: that.parameters.cashflows.map(x => x.value)
+      };
       this.$axios({
-        url : "/api/calculate",
-        method : "POST",
-        data : parameters,
+        url: "/api/calculate",
+        method: "POST",
+        data: parameters
       }).then(res => {
         that.output = res.data;
         that.historyItems.unshift(res.data);
       });
     }
   },
-  components : {
+  components: {
     historyItem
   },
-  mounted : function(){
+  mounted: function() {
     this.$axios({
-      url : "/api/history"
+      url: "/api/history"
     }).then(res => {
-       this.historyItems = res.data;
-       this.historyIsLoading = false;
+      this.historyItems = res.data;
+      this.historyIsLoading = false;
     });
   }
-}
+};
 </script>
 
 <style>
-*{
+* {
   padding: 0;
-  margin : 0;
+  margin: 0;
 }
 
 html,
 body,
-#app{
+#app {
   position: absolute;
   top: 0;
   right: 0;
@@ -135,53 +148,96 @@ body,
   left: 0;
 }
 
-#app{
-  padding: 1em;
+#app {
+  margin: 1em;
 }
 
-#parameters-container{
+main {
   display: flex;
+  height: 100%;
+  min-width: 800px;
+}
+
+main > * {
+  padding: 0.5em;
+}
+
+#parameters-container {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+#result-container {
+  flex: 1;
+  overflow:auto;
+}
+
+#result-container table {
+  width: 100%;
+}
+
+#result-container table th{
+  position: sticky;
+  top: -10px;
+  background: white;
+}
+
+#cashflow-inputs-container {
+  max-height: 100%;
   position: relative;
-}
-
-#parameters-container > *:not(:last-child){
-  margin-right: 1em;
-}
-
-#singular-parameters-container{
-  width: 300px;
-}
-
-#parameter-actions-container{
-  margin-left: auto;
-}
-
-#cashflow-inputs-container{
-  position: relative;
-  width: 200px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 #cashflow-inputs-container .wrapper{
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom:0;
-  left: 0;
+  position: relative;
+  height: 100%;
   overflow: auto;
 }
 
-#cashflow-inputs-container .wrapper > *:not(:last-child){
-  margin-bottom: .5em;
-}
-
-#history-items-container{
+#cashflow-inputs-container ._list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
+  flex-direction: column;
 }
 
-#history-items-container > *:not(:last-child){
-  margin-right: 1em;
-  margin-bottom: 0;
+#cashflow-inputs-container ._list > *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
+
+#history-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 150px;
+}
+
+#history-container .wrapper {
+  position: relative;
+  height: 100%;
+}
+
+#history-container ._list {
+  padding: 0.5em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+#history-container ._title {
+  margin-bottom: 0.5em;
+}
+
+#parameter-actions-container > .button {
+  width: 50%;
 }
 </style>
