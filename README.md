@@ -3,16 +3,16 @@ By [Jesmer Paz](mailto:paz.jesr@gmail.com)
 
 ## Installation
   1. Clone the project
-  2. Client(npv-vue folder) Installation <br>
-    2.1. Open a command line interface in the Client's root directory<br>
-    2.2. Install dependencies with <code>npm i</code><br>
-    2.3. Run client app with<code>npm run serve</code>
-  3. Server(NPV folder) Installation<br>
-    3.1. Execute the solution(NPV.sln)<br>
-    3.2. Right click on the NPV project and select <strong>Clean</strong>.<br>
-    3.3. Right click once again on the NPV project and select <strong>Rebuild</strong>.<br>
-    3.4. Right click once more on the NPV project and select <strong>Set as StartUp Project</strong><br>
-    3.5. Run the project(F5)
+  2. Server(NPV folder) Installation<br>
+    2.1. Execute the solution(NPV.sln)<br>
+    2.2. Right click on the NPV project and select <strong>Clean</strong>.<br>
+    2.3. Right click once again on the NPV project and select <strong>Rebuild</strong>.<br>
+    2.4. Right click once more on the NPV project and select <strong>Set as StartUp Project</strong><br>
+    2.5. Run the project(F5)
+  3. Client(npv-vue folder) Installation <br>
+    3.1. Open a command line interface in the Client's root directory<br>
+    3.2. Install dependencies with <code>npm i</code><br>
+    3.3. Run client app with<code>npm run serve</code>
   4. Open a browser <i>(preferably Chrome)</i> and navigate to <strong>http://localhost:8080</strong>
   ## Software
     1. Visual Studio 2017
