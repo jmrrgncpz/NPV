@@ -11,6 +11,6 @@ namespace NPV.Services
     public interface IService
     {
         IEnumerable<CalculationVM> GetHistory();
-        IEnumerable<BaseSingleNPVCalculation> ProcessCalculation(ParametersVM parameters);
+        IEnumerable<SingleNPVCalculation> ProcessCalculation(ParametersVM parameters);
     }
 }

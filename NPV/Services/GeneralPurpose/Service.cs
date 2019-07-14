@@ -16,9 +16,9 @@ namespace NPV.Services
         NPVContext dbContext = new NPVContext();
 
         public Service() { }
-        public IEnumerable<BaseSingleNPVCalculation> ProcessCalculation(ParametersVM parameters)
+        public IEnumerable<SingleNPVCalculation> ProcessCalculation(ParametersVM parameters)
         {
-            List<BaseSingleNPVCalculation> npvCalculations = new List<BaseSingleNPVCalculation>();
+            List<SingleNPVCalculation> npvCalculations = new List<SingleNPVCalculation>();
             for (
                 decimal discountRate = parameters.LowerBoundDiscountRate;
                 discountRate <= parameters.UpperBoundDiscountRate;
@@ -26,7 +26,7 @@ namespace NPV.Services
                 )
             {
                 decimal NPV = calculationService.CalculateNPV(parameters.Cashflows, discountRate, parameters.InitialValue);
-                npvCalculations.Add((BaseSingleNPVCalculation)new SingleNPVCalculation { DiscountRate = discountRate, NPV = NPV });
+                npvCalculations.Add(new SingleNPVCalculation { DiscountRate = discountRate, NPV = NPV });
             }
 
             calculationService.SaveCalculation(parameters, npvCalculations);

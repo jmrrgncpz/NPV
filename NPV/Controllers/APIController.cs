@@ -25,8 +25,21 @@ namespace NPV.Controllers
         [Route("calculate")]
         public IHttpActionResult Calculate(ParametersVM parameters)
         {
-            IEnumerable<BaseSingleNPVCalculation> npvCalculations = service.ProcessCalculation(parameters);
-            return Ok(npvCalculations);
+            IEnumerable<SingleNPVCalculation> npvCalculations = service.ProcessCalculation(parameters);
+            IEnumerable<Cashflow> cashFlows = parameters.Cashflows.Select(y => new Cashflow { Value = y });
+
+            var x = new Calculation
+            {
+                CalculationDate = DateTime.Now,
+                Cashflows = cashFlows.ToArray(),
+                DiscountRateIncrement = parameters.DiscountRateIncrement,
+                InitialValue = parameters.InitialValue,
+                LowerBoundDiscountRate = parameters.LowerBoundDiscountRate,
+                UpperBoundDiscountRate = parameters.UpperBoundDiscountRate,
+                ResultSet = npvCalculations.ToArray()
+            };
+
+            return Ok(x);
         }
 
         [HttpGet]

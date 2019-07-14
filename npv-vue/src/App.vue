@@ -35,17 +35,17 @@
       </section>
 
       <section id="result-container">
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <th>Discount Rate</th>
               <th>NPV</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="result in output">
-              <th>{{ result.DiscountRate }}</th>
-              <th>{{ result.NPV }}</th>
+          <tbody v-if="!!output">
+            <tr v-for="result in output.ResultSet">
+              <td>{{ result.DiscountRate }}</td>
+              <td>{{ result.NPV }}</td>
             </tr>
           </tbody>
         </table>
@@ -77,7 +77,7 @@ export default {
         discountRateIncrement : 0,
         cashflows : [{value : 0}]
       },
-      output : [],
+      output : null,
       historyItems : [],
       historyIsLoading : true
     }
@@ -101,6 +101,7 @@ export default {
         data : parameters,
       }).then(res => {
         that.output = res.data;
+        that.historyItems.unshift(res.data);
       });
     }
   },
