@@ -28,7 +28,8 @@
                 v-on:cashflow-input-remove-btn-clicked="removeCashflowInput(i)"
               ></cashflow-input>
               <button
-                class="button has-icons-left is-expanded btn-cashflow-add"
+                id="btn-cashflow-add"
+                class="button has-icons-left is-expanded"
                 v-on:click="addCashflowInput"
               >
                 <b-icon pack="fas" icon="plus" size="is-small"></b-icon>
@@ -252,6 +253,11 @@ main > * {
 
 #cashflow-inputs-container ._list > *:not(:last-child) {
   margin-bottom: 0.5em;
+}
+
+#btn-cashflow-add{
+  position: sticky;
+  bottom: 0;
 }
 
 #history-container {
