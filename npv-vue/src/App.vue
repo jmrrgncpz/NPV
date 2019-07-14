@@ -52,7 +52,7 @@
               <th>NPV</th>
             </tr>
           </thead>
-          <tbody v-if="!!output">
+          <tbody v-if="output">
             <tr v-for="result in output.ResultSet">
               <td>{{ result.DiscountRate }}</td>
               <td>{{ result.NPV }}</td>
@@ -67,7 +67,7 @@
           <div class="_list">
             <div v-if="historyIsLoading">Fetching previously ran calculations...</div>
             <div v-else id="history-items-container" class="content">
-              <history-item v-for="historyItem in historyItems" v-bind="historyItem"></history-item>
+              <history-item v-for="historyItem in historyItems" v-bind="historyItem" v-on:click.native="viewHistoryItem(historyItem)"></history-item>
             </div>
           </div>
         </div>
@@ -123,6 +123,20 @@ export default {
       this.parameters.upperBoundDiscountRate = 0;
       this.parameters.discountRateIncrement = 0;
       this.parameters.cashflows = [{ value:0 }];
+    },
+    viewHistoryItem : function(historyItem){
+      this.parameters.initialValue = historyItem.InitialValue;
+      this.parameters.discountRateIncrement = historyItem.DiscountRateIncrement;
+      this.parameters.lowerBoundDiscountRate = historyItem.LowerBoundDiscountRate;
+      this.parameters.upperBoundDiscountRate = historyItem.UpperBoundDiscountRate;
+
+      this.parameters.cashflows = historyItem.Cashflows.map(hi => {
+        return {
+          value : hi.Value
+        }
+      })
+      
+      this.output = historyItem;
     }
   },
   components: {

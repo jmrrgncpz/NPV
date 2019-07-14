@@ -50,7 +50,14 @@ export default {
 }
 </script>
 <style scoped>
+.history-item{
+    cursor: pointer;
+    transition: background .2s ease;
+}
 
+.history-item:hover{
+    background:whitesmoke;
+}
 </style>
 
 
