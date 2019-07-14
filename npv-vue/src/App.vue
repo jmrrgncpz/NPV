@@ -3,21 +3,22 @@
     <main>
       <section id="parameters-container">
         <div id="singular-parameters-container" class="field">
-          <b-field label="Initial Value">
-            <b-input v-model="parameters.initialValue.value" type="number"></b-input>
-          </b-field>
-          <b-field label="Lower Bound Discount Rate">
-            <b-input v-model="parameters.lowerBoundDiscountRate.value" type="number"></b-input>
-          </b-field>
-          <b-field label="Upper Bound Discount Rate">
-            <b-input v-model="parameters.upperBoundDiscountRate.value" type="number"></b-input>
-          </b-field>
-          <b-field label="Discount Rate Increment">
-            <b-input v-model="parameters.discountRateIncrement.value" type="number" step="0.01"></b-input>
+          <b-field 
+            v-for="(parameter, key) in parameters"
+            v-if="key != 'cashflows'"
+            v-bind:label="parameter.label"
+            v-bind:key="`input-${parameter.label}`"
+            v-bind:message="parameter.message"
+            v-bind:type="parameter.message != '' ? 'is-danger' : ''">
+            <b-input type="number" v-model="parameter.value"></b-input>
           </b-field>
         </div>
         <div id="cashflow-inputs-container" class="field">
-          <p class="label is-size-6">Cashflows</p>
+          <b-field
+            v-bind:label="parameters.cashflows.label"
+            v-bind:message="parameters.cashflows.message"
+            v-bind:type="parameters.cashflows.message != '' ? 'is-danger' : ''">
+          </b-field>
           <div class="wrapper">
             <div class="_list">
               <cashflow-input
@@ -89,43 +90,53 @@ export default {
     return {
       parameters: {
         initialValue: {
+          label : "Initial Value",
           value : 0,
-          validator : function(value){
-            if(value <= 0 || value > 10000000000) return { valid: false, message : "Valid values ranges from 1 to 10000000000"};
+          message : "",
+          validator : function(context){
+            if(this.value <= 0 || this.value > 10000000000) return { valid: false, message : "Valid values ranges from 1 to 10000000000"};
 
-            return true;
+            return { valid : true };
           }
         },
         lowerBoundDiscountRate: {
+          label : "Lower Bound Discount Rate",
           value : 0,
-          validator : function(value){
-            if(value > this.upperBoundDiscountRate.value) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
-            if(value < 0 || value > 100) return { valid: false, message : "Valid values ranges from 0 to 100"};
+          message : "",
+          validator : function(context){
+            if(this.value >= context.parameters.upperBoundDiscountRate.value) return { valid : false, message : "Lower bound discount rate should be lower than Upper bound discount rate."};
+            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
 
             return { valid : true };
           }
         },
         upperBoundDiscountRate: {
+          label : "Upper Bound Discount Rate",
           value : 0,
-          validator : function(value){
-            if(value < this.lowerBoundDiscountRate.value) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
-            if(value < 0 || value > 100) return { valid: false, message : "Valid values ranges from 0 to 100"};
+          message : "",
+          validator : function(context){
+            if(this.value <= context.parameters.lowerBoundDiscountRate.value) return { valid : false, message : "Upper bound discount rate should be higher than Lower bound discount rate."};
+            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
 
             return { valid : true };
           }
         },
         discountRateIncrement: {
+          label : "Discount Rate Increment",
           value : 0,
-          validator : function(value){
-            if(value <= 0) return { valid : false, message : "Valid value should be greater than 0"}
+          message : "",
+          validator : function(context){
+            if(this.value < 1 || this.value > 100) return { valid: false, message : "Valid values ranges from 1 to 100"};
 
             return { valid : true };
           }
         },
         cashflows: {
+          label : "Cashflows",
           value : [{ value: 0 }],
-          validator : function(value){
-            const flag = value.some(x => x.value < -10000000000 || x.value > 10000000000);
+          message : "",
+          validator : function(context){
+            const flag = this.value.some(x => x.value < -10000000000 || x.value > 10000000000);
 
             if(flag) return { valid : false, message : "Valid value ranges from -10000000000 to 10000000000"}
 
@@ -151,6 +162,9 @@ export default {
         DiscountRateIncrement: that.parameters.discountRateIncrement.value,
         Cashflows: that.parameters.cashflows.value.map(x => x.value)
       };
+      const flag = this.validateInputs();
+      if(!flag) return;
+
       this.$axios({
         url: "/api/calculate",
         method: "POST",
@@ -199,8 +213,14 @@ export default {
       this.parameters.cashflows.value.splice(index, 1)
     },
     validateInputs : function(){
-      if(this.lowerBoundDiscountRate > this.upperBoundDiscountRate) return false;
-      if(this.discountRateIncrement <= 0) return false;
+      for(let key in this.parameters){
+        const result = this.parameters[key].validator(this);
+        this.parameters[key].message = result.message || "";
+
+        if(!result.valid) return false;
+      }
+
+      return true;
     }
   },
   components: {
