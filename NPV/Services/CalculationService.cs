@@ -32,7 +32,7 @@ namespace NPV.Services
             }
         }
 
-        public Calculation SaveCalculation(ParametersVM parameters)
+        public  Calculation SaveCalculation(ParametersVM parameters, IEnumerable<BaseSingleNPVCalculation> NPVs)
         {
             Calculation npvc = new Calculation
             {
@@ -45,10 +45,13 @@ namespace NPV.Services
             dbContext.NPVCalculations.Add(npvc);
             dbContext.SaveChanges();
 
+            SaveCashflows(parameters.Cashflows, npvc.ID);
+            SaveSingleNPVCalculations(NPVs, npvc.ID);
+
             return npvc;
         }
 
-        public void SaveCashflows(decimal[] Cashflows, int calculationId)
+        private void SaveCashflows(decimal[] Cashflows, int calculationId)
         {
             foreach (decimal cashflow in Cashflows)
             {
@@ -58,7 +61,7 @@ namespace NPV.Services
             dbContext.SaveChanges();
         }
 
-        public void SaveSingleNPVCalculations(IEnumerable<BaseSingleNPVCalculation> nPVCalculations, int calculationId)
+        private void SaveSingleNPVCalculations(IEnumerable<BaseSingleNPVCalculation> nPVCalculations, int calculationId)
         {
             foreach (BaseSingleNPVCalculation baseNPVCalculation in nPVCalculations)
             {

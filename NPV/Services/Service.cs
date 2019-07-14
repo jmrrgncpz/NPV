@@ -29,6 +29,8 @@ namespace NPV.Services
                 npvCalculations.Add((BaseSingleNPVCalculation)new SingleNPVCalculation { DiscountRate = discountRate, NPV = NPV });
             }
 
+            calculationService.SaveCalculation(parameters, npvCalculations);
+
             return npvCalculations;
         }
 

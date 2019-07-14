@@ -11,8 +11,6 @@ namespace NPV.Services
     public interface ICalculationService
     {
         decimal CalculateNPV(decimal[] Cashflows, decimal DiscountRate, decimal InitialValue);
-        Calculation SaveCalculation(ParametersVM parameters);
-        void SaveCashflows(decimal[] Cashflows, int calculationId);
-        void SaveSingleNPVCalculations(IEnumerable<BaseSingleNPVCalculation> nPVCalculations, int calculationId);
+        Calculation SaveCalculation(ParametersVM parameters, IEnumerable<BaseSingleNPVCalculation> NPVs);
     }
 }
