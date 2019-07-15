@@ -8,7 +8,8 @@ By [Jesmer Paz](mailto:paz.jesr@gmail.com)
     2.2. Right click on the NPV project and select <strong>Clean</strong>.<br>
     2.3. Right click once again on the NPV project and select <strong>Rebuild</strong>.<br>
     2.4. Right click once more on the NPV project and select <strong>Set as StartUp Project</strong><br>
-    2.5. Run the project(F5)
+    2.5. Open the Web.config file and look for the <code>connectionString</code> entry. Replace the Database Source value as necessary.
+    2.6. Run the project(F5)
   3. Client(npv-vue folder) Installation <br>
     3.1. Open a command line interface in the Client's root directory<br>
     3.2. Install dependencies with <code>npm i</code><br>
